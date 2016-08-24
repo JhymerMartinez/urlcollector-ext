@@ -1,3 +1,0 @@
-window.onload = mensaje => {
-  debugger;
-};

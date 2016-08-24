@@ -4,6 +4,7 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 import del from 'del';
 import runSequence from 'run-sequence';
 import {stream as wiredep} from 'wiredep';
+import polybuild from 'polybuild';
 
 const $ = gulpLoadPlugins();
 
@@ -100,7 +101,9 @@ gulp.task('watch', ['lint', 'babel', 'html'], () => {
     'app/_locales/**/*.json'
   ]).on('change', $.livereload.reload);
 
-  gulp.watch('app/scripts.babel/**/*.js', ['lint', 'babel']);
+  gulp.watch('app/scripts.babel/**/*.js', () => {
+    runSequence('lint', 'babel', 'vulcanize');
+  });
   gulp.watch('bower.json', ['wiredep']);
 });
 
@@ -127,9 +130,16 @@ gulp.task('build', (cb) => {
   runSequence(
     'lint', 'babel', 'chromeManifest',
     ['html', 'images', 'extras'],
-    'size', cb);
+    'size', 'vulcanize', cb);
 });
 
 gulp.task('default', ['clean'], cb => {
   runSequence('build', cb);
 });
+
+gulp.task('vulcanize', () => {
+  gulp.src('app/urls.html')
+    .pipe(polybuild())
+    .pipe(gulp.dest('app'));
+});
+
