@@ -90,20 +90,26 @@ gulp.task('babel', () => {
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
-gulp.task('watch', ['lint', 'babel', 'html'], () => {
+gulp.task('watch', ['lint', 'babel', 'html', 'vulcanize'], () => {
   $.livereload.listen();
 
   gulp.watch([
     'app/*.html',
+    '!app/*.build.html',
+    'app/elements/**/*.html',
     'app/scripts/**/*.js',
     'app/images/**/*',
     'app/styles/**/*',
-    'app/_locales/**/*.json'
-  ]).on('change', $.livereload.reload);
+    'app/_locales/**/*.json',
+  ]).on('change', () => {
+    runSequence('vulcanize', $.livereload.reload);
+  });
 
   gulp.watch('app/scripts.babel/**/*.js', () => {
     runSequence('lint', 'babel', 'vulcanize');
   });
+
+
   gulp.watch('bower.json', ['wiredep']);
 });
 

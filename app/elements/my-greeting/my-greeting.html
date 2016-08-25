@@ -1,0 +1,38 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<dom-module id="my-greeting">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+
+      span,
+      input {
+        @apply(--paper-font-body2);
+      }
+    </style>
+    <input value="{{greeting::input}}">
+    <h3 class="page-title">{{greeting}}</h3>
+
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+      debugger;
+      Polymer({
+        is: 'my-greeting',
+
+        properties: {
+          greeting: {
+            type: String,
+            value: 'Welcome!',
+            notify: true
+          }
+        }
+      });
+    })();
+  </script>
+</dom-module>

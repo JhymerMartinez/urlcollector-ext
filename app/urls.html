@@ -1,56 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Document</title>
-  <script src="scripts/main.js"></script>
-  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="bower_components/polymer/polymer.html"></link>
-  <link rel="import" href="hola-mundo/hola-mundo.html"></link>
-  <link rel="import" href="bower_components/paper-button/paper-button.html"></link>
-  <link rel="import" href="bower_components/google-map/google-map.html"></link>
-  <link rel="import" href="bower_components/paper-progress/paper-progress.html"></link>
-  <link rel="import" href="bower_components/google-chart/google-chart.html"></link>
-  <link rel="import" href="bower_components/iron-ajax/iron-ajax.html"></link>
-  <link rel="import" href="my-greeting/my-greeting.html"></link>
-    <style>
-    google-map {
-      height: 400px;
-    }
-  </style>
-</head>
-<body >
-  <h1>hola</h1>
-  <hola-mundo who="cdcdcdcdcd"></hola-mundo>
-  <br>
-  <paper-button raised>raised</paper-button>
-  <br>
-  <br>
-  <br>
-  <template is="dom-bind" id="app">
-    <iron-ajax
-      method="POST"
-      auto
-      headers='{"Content-Type": "application/json"}'
-      url="https://urlcollector.herokuapp.com/api/auth/login"
-      body='{
-        "email":"jhmartinez1991@gmail.com",
-        "password":"test1234"
-      }'
-      handle-as="json"
-      last-response="{{ajaxResponse}}">
-    </iron-ajax>
-
-    <p>{{ajaxResponse.token}}</p>
-
-</template>
-
-  <!--
-  <google-map latitude="-4.0078909" longitude="-79.21127690000003"></google-map>
--->
-  <br>
-  <paper-progress value="10" secondary-progress="30"></paper-progress>
-  <br>
-  <my-greeting></my-greeting>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="scripts/main.js"></script>
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="bower_components/polymer/polymer.html"></link>
+    <link rel="import" href="bower_components/paper-button/paper-button.html"></link>
+    <link rel="import" href="bower_components/iron-ajax/iron-ajax.html"></link>
+    <link rel="import" href="elements/my-greeting/my-greeting.html"></link>
+  </head>
+  <body>
+    <my-greeting></my-greeting>
+    <paper-button raised>ok</paper-button>
+    <br>
+    <template is="dom-bind" id="app">
+      <iron-ajax
+        method="POST"
+        auto
+        headers='{"Content-Type": "application/json"}'
+        url="https://urlcollector.herokuapp.com/api/users/sign_in"
+        body='{
+          "email":"jhmartinez1991@gmail.com",
+          "password":"test1234"
+        }'
+        handle-as="json"
+        last-response="{{ajaxResponse}}">
+      </iron-ajax>
+      <p>resp2: {{ajaxResponse.token}}</p>
+    </template>
+  </body>
 </html>
