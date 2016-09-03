@@ -5,29 +5,13 @@
     <title>Document</title>
     <script src="scripts/main.js"></script>
     <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="bower_components/polymer/polymer.html"></link>
-    <link rel="import" href="bower_components/paper-button/paper-button.html"></link>
-    <link rel="import" href="bower_components/iron-ajax/iron-ajax.html"></link>
-    <link rel="import" href="elements/my-greeting/my-greeting.html"></link>
+    <link rel="import" href="bower_components/polymer/polymer.html">
+    <link rel="import" href="elements/url-form-login/url-form-login.html">
   </head>
   <body>
-    <my-greeting></my-greeting>
-    <paper-button raised>ok</paper-button>
-    <br>
-    <template is="dom-bind" id="app">
-      <iron-ajax
-        method="POST"
-        auto
-        headers='{"Content-Type": "application/json"}'
-        url="https://urlcollector.herokuapp.com/api/users/sign_in"
-        body='{
-          "email":"jhmartinez1991@gmail.com",
-          "password":"test1234"
-        }'
-        handle-as="json"
-        last-response="{{ajaxResponse}}">
-      </iron-ajax>
-      <p>resp2: {{ajaxResponse.token}}</p>
-    </template>
+    <url-form-login api="https://urlcollector.herokuapp.com/api/users/sign_in"
+      method="post">
+    </url-form-login>
+
   </body>
 </html>

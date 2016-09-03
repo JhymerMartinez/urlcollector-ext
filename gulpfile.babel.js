@@ -90,7 +90,8 @@ gulp.task('babel', () => {
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
-gulp.task('watch', ['lint', 'babel', 'html', 'vulcanize'], () => {
+gulp.task('watch', ['lint', 'babel', 'html'] , () => {
+  runSequence('vulcanize');
   $.livereload.listen();
 
   gulp.watch([

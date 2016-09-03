@@ -1,0 +1,99 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-form/iron-form.html">
+
+<dom-module id="url-form-login">
+  <template>
+    <style>
+      :host {
+        display: block;
+        text-align: center;
+      }
+      paper-card {
+        width: 400px;
+        text-align: left;
+        padding: 1em;
+      }
+      paper-card .card-header {
+        font-size: 2em;
+        color: var(--paper-grey-500);
+      }
+      paper-card .card-header iron-icon{
+        height: 2em;
+        width: 2em;
+        color: var(--paper-blue-300);
+      }
+      paper-card .card-actions {
+        padding-top: 1em;
+        text-align: right;
+        color: var(--paper-red-300);
+      }
+      paper-button[raised] {
+        background-color: var(--primary-color);
+        color: white;
+      }
+    </style>
+
+    <paper-card elevation="3" animated-shadow="false">
+      <div class="card-header">
+        <iron-icon icon="account-circle"></iron-icon>
+        <span>Crear cuenta</span>
+      </div>
+      <form is="iron-form" id="form"
+        method="{{method}}"
+        action="{{api}}"
+        content-type="application/json">
+        <div class="card-content">
+          <paper-input name="email" label="Email" type="email" required>
+          </paper-input>
+          <paper-input name="password" label="Contraseña" type="password" required>
+          </paper-input>
+        </div>
+        <div class="card-actions">
+          <paper-button raised id="login">Enviar</paper-button>
+          <paper-button>Cancelar</paper-button>
+        </div>
+      </form>
+    </paper-card>
+    <br>
+
+    <paper-card heading="Respuesta" image="" elevation="1" animated-shadow="false">
+      <div class="card-content">
+        <pre id="result"></pre>
+      </div>
+    </paper-card>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'url-form-login',
+      properties: {
+        api: String,
+        method: String
+      },
+      ready: function() {
+        var self = this;
+        debugger;
+        self.$.login.addEventListener('click',function(){
+          debugger;
+          self.$.form.submit();
+        });
+
+        self.$.form.addEventListener('iron-form-response',function(data){
+          debugger;
+          self.$.result.textContent = JSON.stringify(data.detail.__data__.response);
+        });
+
+        self.$.form.addEventListener('iron-form-error',function(data){
+          debugger;
+          self.$.result.textContent = JSON.stringify(data.detail.request.__data__.response);
+        });
+
+      }
+    })
+  </script>
+</dom-module>
